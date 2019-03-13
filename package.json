@@ -1,6 +1,6 @@
 {
   "name": "color-swatcher",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "engines": {
     "sketch": ">=3.0"
   },
@@ -21,8 +21,8 @@
   "devDependencies": {
     "@skpm/builder": "^0.5.11"
   },
-  "repository":{
-    "type":"git",
-    "url":"git+https://github.com/akiersky/color-swatcher.git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akiersky/color-swatcher.git"
   }
 }
