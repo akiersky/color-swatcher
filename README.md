@@ -9,4 +9,4 @@ Usage:
 If no color is selected, the plugin will generate swatches for each layer style in the document. 
 
 ---
-It's my first Skech plugin, any feedback is appreciated!
+This is my first Skech plugin, any feedback is appreciated!
