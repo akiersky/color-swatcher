@@ -21,8 +21,8 @@
   "devDependencies": {
     "@skpm/builder": "^0.5.11"
   },
-  "repository": {
+  "repository":  {
     "type": "git",
     "url": "git+https://github.com/akiersky/color-swatcher.git"
   }
-}
+}    
