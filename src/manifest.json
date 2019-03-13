@@ -1,0 +1,21 @@
+{
+  "name" : "Color Swatcher",
+  "description" : "Produces swatches showing the WCAG color contrast against white and black.",
+  "author" : "Aaron Kiersky",
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "Generate WCAG Swatch",
+      "identifier": "color-swatcher.my-command-identifier",
+      "script": "./color-swatcher.js"
+    }
+  ],
+  "menu": {
+    "title": "Color Swatcher",
+    "items": [
+      "color-swatcher.my-command-identifier"
+    ]
+  }
+}
