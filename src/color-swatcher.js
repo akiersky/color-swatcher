@@ -91,7 +91,7 @@ function createSwatch(color, offset, parent) {
 	// text showing the color of the swatch
 	const textcolor = new sketch.Text({
 		parent: swatch,
-		text: ntc.name(color) + "\n" + color,
+		text: color,
 		fixedWidth: true,
 		frame: new sketch.Rectangle(8, 15, 92, 40),
 		style: {fills: [{ color: contrastColor }], borders: [{enabled:false}] }
