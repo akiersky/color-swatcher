@@ -8,5 +8,7 @@ Usage:
 
 If no color is selected, the plugin will generate swatches for each layer style in the document. 
 
+[Download Color Swatcher](https://github.com/akiersky/color-swatcher/blob/master/color-swatcher.sketchplugin.zip)
+
 ---
 This is my first Skech plugin, any feedback is appreciated!
