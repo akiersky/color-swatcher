@@ -11,4 +11,4 @@ If no color is selected, the plugin will generate swatches for each layer style 
 ---
 This is my first Skech plugin, any feedback is appreciated!
 
-[Download](https://raw.githubusercontent.com/akiersky/color-swatcher/blob/master/color-swatcher.sketchplugin.zip)
+[Download](https://github.com/akiersky/color-swatcher/blob/master/color-swatcher.sketchplugin.zip)
