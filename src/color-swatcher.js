@@ -2,6 +2,7 @@ import sketch from 'sketch'
 
 const doc = sketch.getSelectedDocument()  
 const page = doc.selectedPage
+let artboard = doc.selectedPage;
 
 export default function() {
 	const selectedLayers = doc.selectedLayers
@@ -14,10 +15,13 @@ export default function() {
   		sketch.UI.message("Swatch stylesheet generated 🙌")
 	} 
 	else {
-		const fillcolor = doc.selectedLayers.layers[0].style.fills[0].color.slice(0, 7)
-		
-		createSwatch(fillcolor, 0, page);
-  		sketch.UI.message("Single swatch generated 🙌")
+		for (let i = 0; i < selectedCount; i++) {
+			const fillcolor = doc.selectedLayers.layers[i].style.fills[0].color.slice(0, 7)
+			const position = parentOffsetInArtboard(doc.selectedLayers.layers[i]);
+			log(`position: ` + position.x + " : " + position.y)
+			createSwatch(fillcolor, 0, artboard, position);
+		}
+  		sketch.UI.message("Swatch generated 🙌")
 	}
 }
 
@@ -30,7 +34,7 @@ function createStylesheet(doc) {
 		name: "Styles"
 	})
 
-	for (var s in styles) {
+	for (let s in styles) {
 		if(styles.hasOwnProperty(s)){
 			//log(styles[s].name)
 			const stylecolor = styles[s].style.fills[0].color.slice(0, 7)
@@ -39,15 +43,33 @@ function createStylesheet(doc) {
 	}
 }
 
-function createSwatch(color, offset, parent) {
-	// log(color)
-	// log(ntc.name(color))
+//find layer position relative to artboard
+function parentOffsetInArtboard (layer) {
+  let offset = {x: 0, y: 0};
+  let parent = layer.parent;
+  let layerOffset = {x: layer.frame.x + layer.frame.width, y: layer.frame.y};
+  log('layerOffset' + layerOffset.x + ' : ' + layerOffset.y)
+  while (parent.type !== 'Artboard') {
+    offset.x += parent.frame.x;
+    offset.y += parent.frame.y;
+    parent = parent.parent;
+  }
+  artboard = parent;
+  offset.x += layerOffset.x;
+  offset.y += layerOffset.y;
+
+  return offset;
+}
+
+function createSwatch(color, offset, artboard, parentRect) {
+	let pos = (parentRect) ? {x: parentRect.x +10, y: parentRect.y} : {x: 110*offset, y:0};
+	log(`pos: ` + pos.x + " : "+ pos.y);
 
 	// group for the created swatch
 	const swatch = new sketch.Group({
-		parent:parent,
+		parent:artboard,
 		name: color + " swatch",
-		frame: new sketch.Rectangle(110*offset, 0, 100, 100)
+		frame: new sketch.Rectangle(pos.x, pos.y, 100, 100)
 	})
 	// rectangle background same color as the swatch
 	const rectcolor = new sketch.Shape({
@@ -104,7 +126,7 @@ function createSwatch(color, offset, parent) {
 // from: https://stackoverflow.com/questions/9733288/how-to-programmatically-calculate-the-contrast-ratio-between-two-colors
 // calculate luminanace of a color
 function luminanace(r, g, b) {
-    var a = [r, g, b].map(function (v) {
+    let a = [r, g, b].map(function (v) {
         v /= 255
         return v <= 0.03928
             ? v / 12.92
@@ -114,7 +136,7 @@ function luminanace(r, g, b) {
 }
 //calculate contrast between two rgb colors
 function contrast(rgb1, rgb2) { 
-	var result = (luminanace(rgb1[0], rgb1[1], rgb1[2]) + 0.05) 
+	let result = (luminanace(rgb1[0], rgb1[1], rgb1[2]) + 0.05) 
 			   / (luminanace(rgb2[0], rgb2[1], rgb2[2]) + 0.05); 
 	if (result < 1) result = 1/result; 
 	return result; 
@@ -143,10 +165,11 @@ function checkWCAG(ratio) {
 // from: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 //convert from hex to rgb
 function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     return result ? [
         parseInt(result[1], 16),
         parseInt(result[2], 16),
         parseInt(result[3], 16)
     ] : null
 }
+
